@@ -3,7 +3,7 @@ import "./components/home";
 import Home from "./components/home";
 import Header from "./components/layouts/Header";
 import Footer from "./components/layouts/Footer";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Menu from "./components/Menu";
 import CART from "./components/cart/CART";
@@ -17,9 +17,19 @@ import UpdateProfile from "./components/user/UpdateProfile";
 import NewPassword from "./components/user/NewPassword";
 import ForgotPassword from "./components/user/ForgotPassword";
 import ConfirmOrder from "./components/cart/ConfirmOrders";
+import {Elements, PaymentElement} from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
+import {Payment} from "./components/cart/Payment" 
+
 export default function App() {
+  const [stripeApiKey,setStripeApiKey] = useState(""); 
   useEffect(() => {
     store.dispatch(loadUser());
+    async function getStripeApiKey(){
+      const {data} = await axios.get("/api/v1/stripeapi");
+      setStripeApiKey(data.stripeApiKey);
+    }
   }, []);
   return (
     <Router>
@@ -46,6 +56,16 @@ export default function App() {
               exact
             />
             <Route path="/confirm" element={<ConfirmOrder/>}/>
+            {
+              stripeApiKey && (
+                <Route
+                  path = "/payment"
+                  element={<Elements stripe={loadStripe(stripeApiKey)}>
+                  <Payment/>
+                  </Elements>}
+                />
+              )}
+            
           </Routes>
         </div>
         <Footer />
