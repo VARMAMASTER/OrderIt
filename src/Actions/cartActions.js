@@ -6,6 +6,7 @@ import {
   CLEAR_CART,
   UPDATE_DELIVERY_INFO,
   SAVE_DELIVERY_INFO,
+  SET_RESTAURANT_ID
 } from "../Constants/cartConstants";
 
 
@@ -75,3 +76,10 @@ export const updateDeliveryInfo = (deliveryInfo)=>(dispatch)=>{
     });
   }catch(error){}
 }
+
+export const setRestaurantId = (id)=>{
+  return {
+    type:SET_RESTAURANT_ID,
+    payload:id,
+  };
+};

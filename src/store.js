@@ -10,6 +10,7 @@ import {
 import thunk from "redux-thunk";
 import { cartReducer } from "./Reducers/cartReducer";
 import { authReducer, forgotPasswordReducer, userReducer } from "./Reducers/userReducer";
+import { myOrdersReducers, newOrderReducer, orderDetailsReducer } from "./Reducers/orderReducers";
 
 // Define your reducers here
 const rootReducer = combineReducers({
@@ -19,6 +20,9 @@ const rootReducer = combineReducers({
   auth:authReducer,
   user:userReducer,
   forgotPassword:forgotPasswordReducer,
+  newOrder:newOrderReducer,
+  myOrders:myOrdersReducers,
+  orderDetails:orderDetailsReducer,
   
 });
 

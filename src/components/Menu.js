@@ -4,12 +4,14 @@ import{getMenus} from "../Actions/menuAction";
 import {getRestaurant} from "../Actions/restaurantAction";
 import React,{useEffect} from 'react'
 import Fooditem from "./Fooditem";
+import { setRestaurantId } from "../Actions/cartActions";
 
 export default function Menu ({storeId} ) {
     const { id } = useParams();
     const dispatch = useDispatch();
 
     const {menus, loading, error } = useSelector((state) => state.menus);
+    dispatch(setRestaurantId(id));
 
     useEffect(() => {
         dispatch(getMenus(id, storeId)); 
