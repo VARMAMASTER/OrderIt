@@ -3,8 +3,8 @@ import {
   REMOVE_ITEM_CART,
   UPDATE_CART_QUANTITY,
   CLEAR_CART,
-  UPDATE_DELIVERY_INFO,
   SAVE_DELIVERY_INFO,
+  SET_RESTAURANT_ID,
 } from "../Constants/cartConstants";
 
 const initialState = {
@@ -67,8 +67,14 @@ export const cartReducer = (state = initialState, action) => {
          case   SAVE_DELIVERY_INFO:
           return{
             ...state,
-            cartItems:[],
+            deliveryInfo:action.payload,
           }
+
+          case SET_RESTAURANT_ID:
+            return {
+              ...state,
+              restaurant: action.payload,
+            }
             default:
                 return state;
             }

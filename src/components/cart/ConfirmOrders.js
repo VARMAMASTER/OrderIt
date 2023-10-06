@@ -34,14 +34,14 @@ const ConfirmOrder = () => {
         <div className="col-12 col-lg-8 mt-5 order-confirm cart">
           <h4 className="mb-3">Delivery Info</h4>
           <p>
-            <b>Name:</b>Sai Kiran Varma 
+            <b>Name:</b>{" "}
             {user && user.name}
           </p>
           <p>
-            <b>Phone:</b> 9984767614{deliveryInfo.phoneNo}
+            <b>Phone:</b> {deliveryInfo.phoneNo}
           </p>
           <p className="mb-4">
-            <b>Address: </b> 8-5-420/c,kothirampoor,karimnagar,telangana
+            <b>Address: </b> 
             {`${deliveryInfo.address}, ${deliveryInfo.city}, ${deliveryInfo.postalCode}`} Corrected
           </p>
           <hr/>
