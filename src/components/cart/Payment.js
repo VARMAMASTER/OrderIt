@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import CheckoutSteps from "./CheckoutSteps";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
-import { createOrder, clearErroes } from "../../Actions/orderActions";
+import { createOrder, clearErrors } from "../../Actions/orderActions";
 import {
   useStripe,
   useElements,
@@ -13,6 +13,7 @@ import {
 
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+// import { clearErrors } from "../../Actions/userAction";
 
 const options = {
   style: {
@@ -25,7 +26,12 @@ const options = {
   },
 };
 
- const Payment = () => {
+const paty = {
+  backgroundColor: "#BE521F",
+  color: "white",
+};
+
+const Payment = () => {
   const alert = useAlert();
   const stripe = useStripe();
   const elements = useElements();
@@ -39,7 +45,7 @@ const options = {
   useEffect(() => {
     if (error) {
       alert.error(error);
-      dispatch(clearErroes());
+      dispatch(clearErrors());
     }
   }, [dispatch, alert, error]);
   const order = {
@@ -50,7 +56,7 @@ const options = {
 
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
 
-  if (orderInfo && orderInfo) {
+  if (orderInfo) {
     order.itemsPrice = orderInfo.itemsPrice;
     order.taxPrice = orderInfo.taxPrice;
     order.deliveryPrice = orderInfo.deliveryPrice;
@@ -58,21 +64,20 @@ const options = {
   }
 
   const paymentData = {
-    amoun: Math.round(orderInfo.finalTotal * 100),
+    amount: Math.round(orderInfo.finalTotal * 100),
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
     document.querySelector("#pay_btn").disabled = true;
-
     let res;
-
     try {
       const config = {
         headers: {
           "Content-type": "application/json",
         },
       };
+
       paymentData.description = "Payment for Fooditem purchase";
       res = await axios.post("/api/v1/payment/process", paymentData, config);
       const clientSecret = res.data.client_secret;
@@ -81,7 +86,7 @@ const options = {
       }
 
       const result = await stripe.confirmCardPayment(clientSecret, {
-        Payment_method: {
+        payment_method: {
           card: elements.getElement(CardNumberElement),
           billing_details: {
             name: user.name,
@@ -112,55 +117,57 @@ const options = {
     }
   };
 
-  return(
+  return (
     <>
-        <CheckoutSteps delivery confirmOrder payment />
-        <div className="row wrapper">
+      <CheckoutSteps delivery confirmOrder payment />
+      <div className="row wrapper">
         <div className="col-10 col-lg-5">
-        <from className="shadow-lg" onSubmit ={submitHandler}>
+          <from className="shadow-lg" onClick={submitHandler}>
             <h1 className="m-4">Card Info</h1>
 
             <div className="form-group">
-                <label htmlfor="card_num_field">Card Number</label>
-                <CardNumberElement
+              <label htmlfor="card_num_field">Card Number</label>
+              <CardNumberElement
                 type="text"
                 id="card_num_field"
                 className="form-control"
-                options = {options}/>
+                options={options}
+              />
             </div>
 
             <div className="form-group">
-                <label htmlfor="card_exp_field">Card Expiry</label>
-                <CardExpiryElement
+              <label htmlfor="card_exp_field">Card Expiry</label>
+              <CardExpiryElement
                 type="text"
                 id="card_exp_field"
                 className="form-control"
-                options = {options}/>
+                options={options}
+              />
             </div>
 
             <div className="form-group">
-                <label htmlfor="card_cvc_field">Card cvc</label>
-                <CardCvcElement
+              <label htmlfor="card_cvc_field">Card cvc</label>
+              <CardCvcElement
                 type="text"
                 id="card_cvc_field"
                 className="form-control"
-                options = {options}/>
+                options={options}
+              />
             </div>
 
             <button
-            id ="pay_btn"
-            type="submit"
-            className="btn btn-block py-3">
-                pay {` - ${orderInfo && orderInfo.finalTotal}`}
+              style={paty}
+              id="pay_btn"
+              type="submit"
+              className="btn btn-block py-3 "
+            >
+              pay {` - ${orderInfo && orderInfo.finalTotal}`}
             </button>
-
-        </from>
-            
+          </from>
         </div>
-
-        </div>
+      </div>
     </>
-  )
+  );
 };
 
 export default Payment;

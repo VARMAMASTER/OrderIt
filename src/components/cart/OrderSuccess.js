@@ -1,8 +1,18 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { clearCart } from "../../Actions/cartActions";
 
 const OrderSuccess = () => {
+  const dispatch =useDispatch();
+  useEffect(()=>{
+    const simulateSuccessfulPayment=()=>{
+      setTimeout(()=>{
+        dispatch(clearCart());
+      },2000);
+    };
+    simulateSuccessfulPayment();
+  },[dispatch]);
   return (
     <>
       <div className="row justify-content-center">
