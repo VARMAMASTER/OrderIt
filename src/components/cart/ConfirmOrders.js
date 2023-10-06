@@ -31,7 +31,7 @@ const ConfirmOrder = () => {
     <>
       <CheckoutSteps delivery ConfirmOrder />
       <div className="row d-flex justify-content-between">
-        <div className="col-12 col-lg-8 mt-5 order-confirm cart">
+        <div className="col-12 col-lg-8 mt-5 order-confirm cartt">
           <h4 className="mb-3">Delivery Info</h4>
           <p>
             <b>Name:</b>{" "}

@@ -22,8 +22,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import Payment from "./components/cart/Payment" 
 import OrderSuccess from "./components/cart/OrderSuccess";
+import ListOrders from "./components/order/ListOrders"
  
-
 export default function App() {
   const [stripeApiKey,setStripeApiKey] = useState(""); 
   useEffect(() => {
@@ -69,6 +69,7 @@ export default function App() {
                 />
               )}
             <Route path="/success" element={<OrderSuccess/>}/>
+            <Route path="/eats/orders/me/myOrders" element={<ListOrders/>}/>
           </Routes>
         </div>
         <Footer />
