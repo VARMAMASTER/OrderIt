@@ -170,7 +170,7 @@ export const updatePassword = (passwords) => async (dispatch) => {
 //forgot password
 
 export const forgotPassword = (email) => async (dispatch) => {
-  console.log(email);
+  
   try {
     dispatch({
       type: FORGOT_PASSWORD_REQUEST,
@@ -184,9 +184,10 @@ export const forgotPassword = (email) => async (dispatch) => {
 
     const { data } = await axios.post(
       "/api/v1/users/forgetPassword",
-      "sai@gmail.com",
+      email,
       config
     );
+    console.log("apple");
 
     dispatch({
       type: FORGOT_PASSWORD_SUCCESS,

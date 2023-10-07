@@ -42,7 +42,7 @@ const ConfirmOrder = () => {
           </p>
           <p className="mb-4">
             <b>Address: </b> 
-            {`${deliveryInfo.address}, ${deliveryInfo.city}, ${deliveryInfo.postalCode}`} Corrected
+            {`${deliveryInfo.address}, ${deliveryInfo.city}, ${deliveryInfo.postalCode}`} 
           </p>
           <hr/>
           <h4 className="mt-4">Your Cart Items:</h4>
