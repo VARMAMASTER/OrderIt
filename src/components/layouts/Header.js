@@ -1,9 +1,11 @@
 import React from "react";
 // import logo from "../images/logo.webp";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { logout } from "../../Actions/userAction";
+import Search from "./Search";
+import "../../App.css";
 
 export default function Header() {
   const { cartItems } = useSelector((state) => state.cart);
@@ -26,19 +28,10 @@ export default function Header() {
         </div>
 
         <div className="col-12 col-md-6 mt-2 mt-md-0">
-          <div className="input-group">
-            <input
-              type="text"
-              id="search_field"
-              className="form-control"
-              placeholder="Search your Favorate Restaurant...."
-            />
-            <div className="input-group-append">
-              <button id="search_btn" className="btn">
-                <i className="fa fa-search" aria-hidden="true"></i>
-              </button>
-            </div>
-          </div>
+          <Routes>
+            <Route path="/" element={<Search/>}/>
+            <Route path="/eats/stores/search/:keyword" element={<Search/>}/>
+          </Routes>
         </div>
 
         <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
