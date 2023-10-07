@@ -2,10 +2,44 @@ import React, { Fragment, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
+import Loader from "../layouts/Loader";
+import { getOrderDetails, clearErrors } from "../../Actions/orderActions";
 
 const OrderDetails = ({}) => {
+  const alert = useAlert();
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
+  const {
+    loading,
+    error,
+    order = {},
+  } = useSelector((state) => state.orderDetails);
+
+  const {
+    deliveryInfo,
+    orderItems,
+    paymentInfo,
+    user,
+    finalTotal,
+    orderStatus,
+  } = order;
+
+  useEffect(() => {
+    dispatch(getOrderDetails(id));
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors);
+    }
+  }, [dispatch, alert, error, id]);
+
+  const deliveryDetails =
+    deliveryInfo &&
+    `${deliveryInfo.address},${deliveryInfo.city},${deliveryInfo.postalCode},${deliveryInfo.country}`;
+
+  const isPaid =
+    paymentInfo && paymentInfo.status === "succeeded" ? true : false;
+
   return (
     <>
       {loading ? (
@@ -29,7 +63,7 @@ const OrderDetails = ({}) => {
               </p>
               <p>
                 <b>Amount:</b>{" "}
-                <FontAwesomeIcon icon={faIndianRupeeSign} size="xs" />
+                ₹
                 {finalTotal}
               </p>
 
@@ -78,7 +112,7 @@ const OrderDetails = ({}) => {
 
                       <div className="col-4 col-lg-2 mt-4 mt-lg-0">
                         <p>
-                          <FontAwesomeIcon icon={faIndianRupeeSign} size="xs" />
+                        ₹
                           {item.price}
                         </p>
                       </div>

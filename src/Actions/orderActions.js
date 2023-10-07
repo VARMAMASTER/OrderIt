@@ -72,23 +72,17 @@ export const getOrderDetails = (id) =>async (dispatch)=>{
             type:ORDER_DETAILS_REQUEST,
         })
 
-        const config ={
-            header:{
-                "Content-Type":"applycation/json"
-            }
-        }
-
-        const{data} = await axios.get(`/api/v1/eats/orders/${id}`,config);
+        const{data} = await axios.get(`/api/v1/eats/orders/${id}`);
 
         dispatch({
             type:ORDER_DETAILS_SUCCESS,
             payload: data.order,
         });
 
-    }catch(e){
+    }catch(error){
         dispatch({
             type:ORDER_DETAILS_FAIL,
-            payload:e.response.data.message,
+            payload:error.response.data.message,
         })
     }
 }
