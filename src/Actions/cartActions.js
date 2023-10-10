@@ -6,14 +6,10 @@ import {
   CLEAR_CART,
   UPDATE_DELIVERY_INFO,
   SAVE_DELIVERY_INFO,
-  SET_RESTAURANT_ID
+  SET_RESTAURANT_ID,
 } from "../Constants/cartConstants";
 
-
 export const addItemToCart = (id, quantity) => async (dispatch, getState) => {
-
-    
-
   try {
     const { data } = await axios.get(`/api/v1/eats/item/${id}`);
     const fooditemData = data.data;
@@ -41,13 +37,13 @@ export const addItemToCart = (id, quantity) => async (dispatch, getState) => {
   }
 };
 
-export const updateCartQuantity = (fooditemId, quantity) => async(dispatch) => {
-   
-  dispatch({
-    type: UPDATE_CART_QUANTITY,
-    payload: { fooditemId, quantity},
-  });
-};
+export const updateCartQuantity =
+  (fooditemId, quantity) => async (dispatch) => {
+    dispatch({
+      type: UPDATE_CART_QUANTITY,
+      payload: { fooditemId, quantity },
+    });
+  };
 
 export const removeItemFromCart = (id) => async (dispatch, getState) => {
   dispatch({
@@ -62,24 +58,22 @@ export const clearCart = () => (dispatch) => {
   localStorage.removeItem("cartItems");
 };
 
-export const saveDeliveryInfo = (deliveryInfo)=> (dispatch)=>{
-  dispatch({type:SAVE_DELIVERY_INFO,payload:deliveryInfo});
- 
-}
+export const saveDeliveryInfo = (deliveryInfo) => (dispatch) => {
+  dispatch({ type: SAVE_DELIVERY_INFO, payload: deliveryInfo });
+};
 
-
-export const updateDeliveryInfo = (deliveryInfo)=>(dispatch)=>{
-  try{
+export const updateDeliveryInfo = (deliveryInfo) => (dispatch) => {
+  try {
     dispatch({
-      type:UPDATE_DELIVERY_INFO,
-      payload:deliveryInfo
+      type: UPDATE_DELIVERY_INFO,
+      payload: deliveryInfo,
     });
-  }catch(error){}
-}
+  } catch (error) {}
+};
 
-export const setRestaurantId = (id)=>{
+export const setRestaurantId = (id) => {
   return {
-    type:SET_RESTAURANT_ID,
-    payload:id,
+    type: SET_RESTAURANT_ID,
+    payload: id,
   };
 };

@@ -17,15 +17,12 @@ export const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_CART:
       const item = action.payload;
-
       const isItemExist = state.cartItems.find(
         (i) => i.fooditem === item.fooditem
       );
-
       if (isItemExist) {
         return {
           ...state,
-
           cartItems: state.cartItems.map((i) =>
             i.fooditem === isItemExist.fooditem ? item : i
           ),
@@ -33,7 +30,6 @@ export const cartReducer = (state = initialState, action) => {
       } else {
         return {
           ...state,
-
           cartItems: [...state.cartItems, item],
         };
       }
@@ -41,7 +37,6 @@ export const cartReducer = (state = initialState, action) => {
     case UPDATE_CART_QUANTITY:
       return {
         ...state,
-
         cartItems: state.cartItems.map((item) =>
           item.fooditem === action.payload.fooditemId
             ? {
@@ -51,32 +46,29 @@ export const cartReducer = (state = initialState, action) => {
             : item
         ),
       };
+    case REMOVE_ITEM_CART:
+      return {
+        ...state,
+        cartItems: state.cartItems.filter((i) => i.fooditem !== action.payload),
+      };
 
-      case REMOVE_ITEM_CART:
-        return{
-            ...state,
-            cartItems:state.cartItems.filter((i)=>i.fooditem !== action.payload),
-        };
+    case SAVE_DELIVERY_INFO:
+      return {
+        ...state,
+        deliveryInfo: action.payload,
+      };
 
-        case CLEAR_CART:
-            return{
-                ...state,
-                cartItem:[],
-            };
-
-         case   SAVE_DELIVERY_INFO:
-          return{
-            ...state,
-            deliveryInfo:action.payload,
-          }
-
-          case SET_RESTAURANT_ID:
-            return {
-              ...state,
-              restaurant: action.payload,
-            }
-            default:
-                return state;
-            }
+    case CLEAR_CART:
+      return {
+        ...state,
+        cartItems: [],
+      };
+    case SET_RESTAURANT_ID:
+      return {
+        ...state,
+        restaurant: action.payload,
+      };
+    default:
+      return state;
   }
-
+};
